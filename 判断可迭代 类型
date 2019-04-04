@@ -1,0 +1,13 @@
+判断是否可迭代
+from collections import Iterable
+
+isinstance('abc', Iterable)
+
+
+判断字符串的类型
+>>> x = 'abc'
+>>> y = 123
+>>> isinstance(x, str)
+True
+>>> isinstance(y, str)
+False
