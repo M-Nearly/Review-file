@@ -12,7 +12,7 @@
 
 
 
-## 创建  map
+## 定义  map
 
 > 可以通过make() 创建map，它会先创建好底层数据结构，然后再创建map，并让map指向底层数据结构
 
@@ -23,6 +23,19 @@
 也可以直接通过大括号创建并初始化赋值
 
 ``` go
+1. 声明变量
+var m1 map[int]string
+
+2.通过 make 创建
+m2 := make(map[int]string)
+
+3. 通过 make 创建并指定长度,只是指定了容量,但是里面却是一个数据也没有,但是随着元素的不停的添加,会不停的扩充,提前订好容量的好处,提前申请好,
+m3 := make(map[int]string,10)
+
+
+
+
+
 // 空 map
 my_map := map[string]string{}
 
