@@ -1,0 +1,67 @@
+## sync包的WaitGroup 
+> WaitGroup 是sync包中的一个struct类型,用来收集需要等待执行完成的groutine.
+
+下面是它的定义
+``` go
+type WaitGroup struct {
+        // Has unexported fields.
+}
+    A WaitGroup waits for a collection of goroutines to finish. The main
+    goroutine calls Add to set the number of goroutines to wait for. Then each
+    of the goroutines runs and calls Done when finished. At the same time, Wait
+    can be used to block until all goroutines have finished.
+
+    A WaitGroup must not be copied after first use.
+
+
+func (wg *WaitGroup) Add(delta int)
+func (wg *WaitGroup) Done()
+func (wg *WaitGroup) Wait()
+```
+
+它有三个用法
+1. Add(): 
+> 每次激活想要被等待完成的goroutine之前,先调用Add(),用来设置或添加要等待完成的goroutine数量
+
+	例如: Add(2)或者两次调用Add(1)都会设置等待计数器的值为2,表示要等待2个goroutine完成
+2. Done() 
+> 每次需要等待的goroutine在真正完成之前,应该调用该方法来人为表示goroutine完成了,该方法会对等待计数器减1
+ 
+3. Wait()
+> 在等待计数器减为0之前,Wait()会一直阻塞当前的goroutine
+
+也就是说,Add()用来增加要等待的goroutine的数量Done()用来表示已经完成了,减少一次计数器,Wait()用来等待所有需要等待的goroutine完成
+
+
+下面是一个示例,通过示例很容易理解
+``` go
+package main
+
+import (  
+    "fmt"
+    "sync"
+    "time"
+)
+
+func process(i int, wg *sync.WaitGroup) {  
+    fmt.Println("started Goroutine ", i)
+    time.Sleep(2 * time.Second)
+    fmt.Printf("Goroutine %d ended\n", i)
+    wg.Done()
+}
+
+func main() {  
+    no := 3
+    var wg sync.WaitGroup
+    for i := 0; i < no; i++ {
+        wg.Add(1)
+        go process(i, &wg)
+    }
+    wg.Wait()
+    fmt.Println("All go routines finished executing")
+}
+```
+
+**注意**的是 Process()中使用指针类型的`*sync.WaitGroup`作为参数,这里不能使用值类型的 `sync.WaitGroup`作为参数,因为这意味着每个goroutine都拷贝一份wg,每个goroutine都使用自己的wg,这显然是不合理的,这三个goroutine应该共享一个wg,才知道这3个goroutine都完成了.
+事实上,如果使用值类型的参数,main goroutine将永久阻塞而导致产生死锁
+
