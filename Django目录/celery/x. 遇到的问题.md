@@ -3,7 +3,10 @@
 - celery 3.1.26
 - redis 2.10.6
 
-## 1. ImportError No module named pbr.pbr_json
+## 1.  pip install Celery
+
+ > ImportError No module named pbr.pbr_json
+
 `pip install --upgrade pbr`
 
 ## 2. Celery worker crashes 
