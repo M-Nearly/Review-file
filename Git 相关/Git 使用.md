@@ -574,3 +574,30 @@ usage: git remote [-v | --verbose]
     -v, --verbose         be verbose; must be placed before a subcommand
 
 ```
+
+
+``` 
+Administrator@MicroWin10-1554 MINGW64 /e/gitfiles (master)
+$ git push origin master
+To https://github.com/M-Nearly/Review-file.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/M-Nearly/Review-file.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+Administrator@MicroWin10-1554 MINGW64 /e/gitfiles (master)
+$ git pull -rebase origin master
+error: Invalid value for --rebase: ebase
+```
+出现错误的主要原因是github中的README.md文件不在本地代码目录中
+
+可以通过如下命令进行代码合并【注：pull=fetch+merge]
+
+执行上面代码后可以看到本地代码库中多了README.md文件
+
+此时再执行语句 git push -u origin master即可完成代码上传到github
+git pull --rebase origin master
+
