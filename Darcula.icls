@@ -1,0 +1,75 @@
+<scheme name="Darcula" version="142" parent_scheme="Darcula">
+  <metaInfo>
+    <property name="created">2019-05-30T13:31:31</property>
+    <property name="ide">Python</property>
+    <property name="ideVersion">2018.1.4.0.0</property>
+    <property name="modified">2019-05-30T13:31:37</property>
+    <property name="originalScheme">_@user_Darcula</property>
+  </metaInfo>
+  <colors>
+    <option name="DOCUMENTATION_COLOR" value="3c3f41" />
+  </colors>
+  <attributes>
+    <option name="PY.ANNOTATION">
+      <value>
+        <option name="FOREGROUND" value="c4db0a" />
+      </value>
+    </option>
+    <option name="PY.BUILTIN_NAME">
+      <value>
+        <option name="FOREGROUND" value="80a9e7" />
+      </value>
+    </option>
+    <option name="PY.CLASS_DEFINITION">
+      <value>
+        <option name="FOREGROUND" value="f74ff" />
+      </value>
+    </option>
+    <option name="PY.DECORATOR">
+      <value>
+        <option name="FOREGROUND" value="bafa41" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="PY.DOC_COMMENT">
+      <value>
+        <option name="FOREGROUND" value="a2ffd0" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="PY.DOC_COMMENT_TAG">
+      <value>
+        <option name="FOREGROUND" value="969794" />
+        <option name="FONT_TYPE" value="3" />
+        <option name="EFFECT_COLOR" value="629755" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="PY.FUNCTION_CALL">
+      <value>
+        <option name="FOREGROUND" value="c02558" />
+      </value>
+    </option>
+    <option name="PY.FUNC_DEFINITION">
+      <value>
+        <option name="FOREGROUND" value="f74ff" />
+        <option name="EFFECT_COLOR" value="3c3f41" />
+      </value>
+    </option>
+    <option name="PY.KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="c62157" />
+        <option name="EFFECT_COLOR" value="3c3f41" />
+        <option name="EFFECT_TYPE" value="3" />
+      </value>
+    </option>
+    <option name="PY.PARENTHS">
+      <value />
+    </option>
+    <option name="PY.SELF_PARAMETER">
+      <value>
+        <option name="FOREGROUND" value="941042" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
