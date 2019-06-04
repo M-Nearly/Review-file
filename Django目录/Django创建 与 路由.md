@@ -160,6 +160,19 @@ print(url2)
 
 ```
 
+
+- include 用法 
+``` python
+from django.contrib import admin
+from django.urls import path,include,re_path
+# from app01 import urls
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    re_path('^app01/', include(('app01.urls','app01'),namespace='app01')),
+    re_path('^app02', include(('app02.urls','app02'),namespace='app02')),
+
+]
+```
 django2.0版的path  待完成
 
 
