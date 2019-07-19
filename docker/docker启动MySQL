@@ -1,0 +1,69 @@
+
+
+基于 docker 安装mysql
+
+1. docker安装
+yum -y install docker
+
+2. docker 搜索安装可以用的镜像
+docker search mysql
+
+3. 拉取镜像
+docker pull mysql:x  可以指定版本信息
+
+4. 查看镜像
+docker images
+
+5. 运行docker 
+	1. 创建宿主机数据存放目录
+		mkdir -p /home/data/mysql
+
+	2. 启动容器  指定目录 端口 创建默认的数据库密码
+		docker run -d -v /opt/data/mysql/:/var/lib/mysql -p 3306:3306 --name meng -e MYSQL_ROOT_PASSWORD=123456 mysql
+
+	3. 查看日志
+		docker logs meng
+
+	4. 查看端口
+		lsof -i:3306
+
+	5. 进入容器
+		docker exec -it 484071393f16 or name /bin/bash
+	等等
+
+
+遇到的问题
+
+1. 别的机器远程连接不上
+	提示:RROR 2059 (HY000): Authentication plugin 'caching_sha2_password' cannot be loaded: /usr/lib64/mysql/plugin/caching_sha2_password.so: cannot open shared object file: No such file or directory
+
+	解决: 版本问题 最近的8.x 和之前的5.x 密码验证是有区别的
+
+	ALTER USER 'root'@'localhost' IDENTIFIED BY 'root' PASSWORD EXPIRE NEVER; #修改加密规则 
+	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; #更新一下用户的密码
+	FLUSH PRIVILEGES; #刷新权限
+
+	--创建新的用户：
+		create user root@'%' identified WITH mysql_native_password BY 'root';
+		grant all privileges on *.* to root@'%' with grant option;
+		flush privileges;
+		--在MySQL8.0创建用户并授权的语句则不被支持：
+		mysql> grant all privileges on *.* to root@'%' identified by 'root' with grant option;
+	        ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'identified by 'root' with grant option' at line 1
+	    mysql> 
+
+2. 容器内没有vi命令
+	apt-get update  # 更新软件包
+	apt-get install vi 
+
+
+
+
+
+
+删除容器
+docker  rm id/name
+
+
+删除镜像
+docker rmi image
