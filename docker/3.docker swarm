@@ -1,0 +1,130 @@
+docker swarm
+
+
+基本概念 用法 
+
+	Docker Swarm是Docker公司开发的容器集群管理服务。 从1.12.0版本开始，已经是Docker安装后自带的一部分（捆绑软件）了，又称为Swarm Mode，无需额外安装。
+
+	与Kubernetes相比，Docker Swarm是一个简单的软件，似乎不堪大用。 但是它与docker-compose兼容的优点，可以弥补一切。 对于没有集群使用经验的小白，用Docker Swarm起步，是一个很好的选择。
+
+
+
+
+概念
+	Docker Swarm 主要包含以下概念
+
+	1.Swarm 
+		这里指的是计算机集群(cluster)在用Docker链接后的状态,
+		docker swarm 命令可以创建,加入,离开 一个集群
+
+	2.Node
+		node 就是计算机节点,也可以认为是一个Docker节点.
+		Node节点分为两类:
+			Manager / Worker
+			
+			一个Swarm至少要有一个Manager,部分管理命令只有在Manager上才能使用
+			两类Node都可以运行service
+			但只有Manager上才能执行命令,比如 docker node 命令可以查看,配置,删除Node
+
+	3. Stack 是一组Service, docker-compose 类似.https://docs.docker.com/compose/reference/overview/
+		默认情况下,一个Stack 共用一个Network,相互可访问,与其他Stack网络隔绝,这个概念只是为了编排的方便.
+		docker stack 命令可以方便地操作一个Stack,而不用一个一个地操作Service
+
+
+	4. Service 是一类容器,对用户来说,Service就是与Swarm交互的最核心内容.
+		service 有两种运行模式,
+			一是 replicated,指定一个Service 运行容器的数量
+			二是global , 在所有符合运行条件的Node上,都运行一个这类容器.
+
+		docker service 命令可以操作Swarm中的Service
+
+	5. Task 就是指运行一个容器的任务,是Swarm执行命令的最小单元.
+		要成功的运行一个service,需要执行一个或多个Task(取决于一个Service的容量),确保每一个容器都顺利启动.
+		通常用户操作的是Service,而非Task
+
+	6.Load balancing 即负载均衡,也包含反向代理.
+		Swarm 使用的是Ingress形式的负载均衡,即访问每个节点的某个Published端口,都可自动代理到真正的服务.
+
+
+操作
+
+创建第一个Node
+docker swarm init --advertise-addr $IP
+$IP是当前Node的外部可访问IP，便于其它Node寻址。
+
+Replicated Mode
+services:
+  some-serivce:
+    ...
+    deploy:
+      mode: replicated
+      replicas: 3
+默认情况下，mode就是replicated，所以这行可以省略。 默认replicas数目为1，代表这个Service只启动1个容器。 这个模式，可以按需启动多个服务，Swarm会自动调节，有时一个Node会启动多个容器。
+
+Global Mode
+services:
+  some-serivce:
+    ...
+    deploy:
+      mode: global
+      placement:
+        ...
+所有可部署的Node，都部署一个。 通过placement，可以限定满足条件的Node，而避免在不合适的Node进行部署。
+
+操作
+这里列出一些常用的具体操作。
+
+创建第一个Node
+docker swarm init --advertise-addr $IP
+$IP是当前Node的外部可访问IP，便于其它Node寻址。
+
+这样，一个Swarm就被初始化完成了，它仅有一个Manager节点。
+
+添加新的Node到Swarm
+在Manager节点，执行以下命令可查看到如何加入一个Node：
+
+$ docker swarm join-token manager
+To add a manager to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-2zspelk468gb6wgw5adea4wlbw4kfy3q1uhr86zpafl9m5a3ho-ezs4fylj526e801b3cl0pojr5 10.174.28.52:2377
+
+$ docker swarm join-token worker
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-2zspelk468gb6wgw5adea4wlbw4kfy3q1uhr86zpafl9m5a3ho-164iqklrfv8o3t55g088hylyk 10.174.28.52:2377
+
+在一个未加入任何Swarm的机器上，执行以上显示的命令docker swarm join --token ...， 即可成为这个Swarm的Manage或Worker节点。
+
+设置节点Label
+在Manager节点，可以对任意节点设置标签：
+
+docker node update $node_name --label-add main=true
+$node_name就是要设置节点的ID或HOSTNAME。 Label是键值对形式，main=true中的main就是键、true就是值。
+
+设置了Label以后，在Compose文件中就可以用placement中的constraints来对可用节点作出限制。
+
+services:
+  some-serivce:
+    ...
+    deploy:
+      placement:
+        constraints:
+          - node.labels.main == true
+      ...
+以上配置，让some-service仅在Label被设置为main=true的节点，才能使用。
+
+启动、停止服务
+docker stack deploy $stack_name -c docker-compose.yaml -c other.yaml ...
+$stack_name是Stack名称。 可以用-c指定多个docker-compose文件，也可在相同Stack下分批次deploy多个文件。 这些YAML文件的写法，和原先用docker-compose命令执行的没有本质区别，只是多加了以下独特配置，并且会忽略一些Swarm场景下不支持的配置。
+
+推荐使用docker-compose文件来编排Stack，而非直接用docker service create来手工创建。 详细配置项，可参考《Compose file version 3 reference | Docker Documentation》。
+
+需要停止Stack的所有服务时，可以执行以下命令。
+
+docker stack rm $stack_name
+更新已运行服务的镜像
+docker service update --image $image:$tag $service_name
+
+
+
+https://www.cnblogs.com/cblogs/p/docker-swarm.html
