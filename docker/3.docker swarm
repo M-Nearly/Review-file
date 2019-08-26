@@ -128,3 +128,47 @@ docker service update --image $image:$tag $service_name
 
 
 https://www.cnblogs.com/cblogs/p/docker-swarm.html
+
+
+
+
+version: "3"
+services:
+  web:
+    image: meng2943/swarmtest:v1
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4000:80"
+    networks:
+      - webnet
+networks:
+  webnet
+
+
+
+
+
+[root@node2 meng]# docker stack deploy -c docker-compose.yml getstartlab
+
+[root@node2 meng]# docker service ls
+
+[root@node2 meng]# docker service ps getstartlab_web
+
+[root@node2 meng]# docker container ls -q
+
+
+
+
+sles 
+
+zypper  == yum 
+
+
+cat /etc/os-release

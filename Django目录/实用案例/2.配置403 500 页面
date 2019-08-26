@@ -1,0 +1,33 @@
+配置403 500 页面
+
+
+
+1. settings中修改
+
+DEBUG = False
+#
+ALLOWED_HOSTS = ['*']
+
+
+2. urls.py
+
+# handler400 = views.bad_request
+# handler403 = views.permission_denied
+# handler404 = views.page_not_found
+# handler500 = views.server_error
+
+
+3. views.py
+
+
+def page_not_found(request,**kwargs):
+    return render(request, '404.html')
+
+
+def page_errors(request,**kwargs):
+    return render(request, '500.html')
+
+
+
+
+4. 创建响应的页面

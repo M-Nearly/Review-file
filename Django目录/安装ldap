@@ -1,0 +1,18 @@
+In file included from Modules/LDAPObject.c:8:0:
+Modules/constants.h:7:18: 致命错误：lber.h：没有那个文件或目录
+#include “lber.h”
+
+解决办法：
+
+ yum install openldap-devel
+
+
+
+
+windows:
+python-ldap
+windows 安装 whl 包：https://www.lfd.uci.edu/~gohlke/pythonlibs/#python-ldap
+django-auth-ldap
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyldap
+pip install pyldap‑2.4.45‑cp36‑cp36m‑win_amd64.whl
+
