@@ -1,0 +1,5 @@
+/home/labsmith/venv_labsmit/lib/python3.6/site-packages/django/db/backends/mysql
+
+
+
+uwsgi --http :8001 --chdir /home/labsmith/Labsmith  --home=/home/labsmith/venv_labsmit --module labsmith.wsgi --static-map /static=/home/labsmith/Labsmith/allstatic
