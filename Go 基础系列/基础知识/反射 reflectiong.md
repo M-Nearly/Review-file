@@ -1,7 +1,3 @@
-定义一个数据结构,返回信息,调用其方法
-
-![image-20190502233810834](/Users/garry/Library/Application Support/typora-user-images/image-20190502233810834.png)
-
 
 
 
@@ -51,3 +47,5 @@ Go语言中的变量是分为两部分的:
 
 
 
+=======
+>>>>>>> fdb5d8aacb74c86a3e6007b7319b93f5753408a6
