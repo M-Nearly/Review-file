@@ -1,0 +1,38 @@
+数据库事务
+在保存数据的过程中，涉及多张表的数据修改，对这些数据的修改应该是一个整体的事务，即要么一起成功，要么一起失败。
+Django中对于数据库的事务，默认每执行一句数据库的操作，即会自动提交，我们需要在数据修改中自己控制数据库事务的执行流程。
+
+在Django中可以通过django.db.transaction模块提供的atomic来定义一个事务，atomic提供两种用法
+
+装饰器用法
+from django.db import transaction
+
+@transaction.atomic
+def viewfunc(request):
+    # 这些代码会在一个事务中执行
+    ...
+ 
+with语句用法
+from django.db import transaction
+
+def viewfunc(request):
+    # 这部分代码不在事务中，会被Django自动提交
+    ...
+
+    with transaction.atomic():
+        # 这部分代码会在事务中执行
+ 
+ 
+在Django中，还提供了保存点的支持，可以在事务中创建保存点来记录数据的特定状态，数据库出现错误时，可以恢复到数据保存点的状态
+
+from django.db import transaction
+
+创建保存点
+save_id = transaction.savepoint()  
+
+回滚到保存点
+transaction.savepoint_rollback(save_id)
+
+提交从保存点到当前状态的所有数据库事务操作
+transaction.savepoint_commit(save_id)
+ 
