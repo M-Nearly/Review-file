@@ -601,3 +601,18 @@ error: Invalid value for --rebase: ebase
 此时再执行语句 git push -u origin master即可完成代码上传到github
 git pull --rebase origin master
 
+# git push时修改用户名密码
+
+修改.git 的文件中的config文件
+
+原文件
+
+[remote "origin"]
+​    url = http://xxxxx/start/start.git
+​    fetch = +refs/heads/*:refs/remotes/origin/*
+
+修改后：
+
+[remote "origin"]
+​    url = http://username:password@git.qoschain.io/start/start.git
+​    fetch = +refs/heads/*:refs/remotes/origin/*
