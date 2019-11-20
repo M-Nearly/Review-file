@@ -98,6 +98,10 @@ urlpatterns = [
 ​	Python 正则表达式中，命名正则表达式组的语法是(?P<name>pattern)，其中name 是组的名称，pattern 是要匹配的模式。
 `re_path(r'^articles/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$', views.month_archive),`
 
+```django
+ path('<int:question_id>/', views.detail, name='detail'),
+```
+
 ## 路由分发
 ``` python
 from django.conf.urls import url,include

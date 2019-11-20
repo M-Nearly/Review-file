@@ -11,6 +11,13 @@ if __name__ == '__main__':
     print(books)
 ```
 
-
 或者直接在当前目录下
 `python manage.py shell`
+
+```python
+>>> import django
+>>> django.setup()
+```
+
+
+
