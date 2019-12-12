@@ -1,0 +1,14 @@
+熟练使用基本的数据结构和算法，深入理解多线程、socket等相关技术
+熟练掌握Golang常用框架，深入了解框架提供的特性及其实现原理细节
+
+
+
+分布式系统，熟练掌握一种以上服务框架和消息中间件，了解其实现原理；
+
+熟悉Internet常用协议，如HTTP、TCP/IP、RPC;熟悉 RESTful 规范；
+熟悉 gRPC, protobuf, 以及微服务架构体系；
+熟悉goroutine，channel，io，http等模块；
+掌握mysql，mongo，redis基本使用；
+熟悉 influxdb 等时序数据库
+
+了解 postgres 数据库，熟练掌握任意一种关系型数据库，熟悉查询和索引的优化
