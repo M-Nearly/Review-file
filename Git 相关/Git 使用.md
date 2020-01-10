@@ -16,13 +16,26 @@
 
 可以设置名字和邮件地址,来区分是谁提交的代码
 ​	`git config --global --edit`
-``` python
+``` shell
 $ git add file1.txt
 $ git add file2.txt file3.txt
 $ git commit -m "add 3 files."
 ```
 
+
+
+## 添加tag
+
+``` shell
+git tag # 查询当前所有tag
+git tag -a v1.0 -m "对tag的描述信息"
+git push origin --tags
+```
+
+
+
 # 代码回滚
+
 ## 代码修改并提交
 1. 修改代码内容
 2. git status 查看状态 (提示代码被修改,)
