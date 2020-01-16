@@ -117,6 +117,179 @@ const routes = [
    ```
 
 
+## 配置消息弹框的效果
+
+1. 在`plugins` 的`element.js` 中导入`Message`组件
+
+2. 挂载Vue下,设置全局组件
+
+   `Vue.prototype.$message = Message`
+
+![1579056933075](assets/1579056933075.png)
+
+
+
+## 把`token` 放到`sessionStroage` 中
+
+``` html
+// 1. 将登录成功之后的token,保存到客户端的sessionStorage 中
+// 1.1 项目中除了登录之外的其他API接口,必须在登录之后才能访问
+// 1.2 token 只应在当前网站打开期间生效, 所有将token保存在sessionStorage中
+window.sessionStorage.setItem('token', res.token)
+// 2. 通过编程式导航跳转到后台主页, 路由地址是/hone
+this.$router.push('/home')
+```
+
+
+
+## 登录 - 路由导航守卫控制权限
+
+![1579058951212](assets/1579058951212.png)
+
+`router.js`
+
+``` javascript
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Login from '@/components/Login.vue'
+import Home from '@/components/Home.vue'
+
+Vue.use(VueRouter)
+
+/*
+const router = new VueRouter({
+  routes: [
+    { path: '/', redirect: '/login' },
+    { path: '/login', redirect: Login },
+    { path: '/home', redirect: Home }
+  ]
+})
+
+// 挂载路由导航守卫
+router.beforeEach((to, from, next) => {
+  // to 将要访问的路径
+  // from 代表从哪个路径跳转而来
+  // next 是一个函数, 表示方形
+  // next() 放行, next('/login')  强制跳转到url
+  if (to.path === '/login') return next()
+  // 获取token
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) return next('/login')
+  next()
+})
+
+export default router
+*/
+
+const routes = [
+  {
+    redirect: '/login',
+    path: '/'
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/Home',
+    component: Home
+  }
+]
+
+const router = new VueRouter({
+  routes
+})
+
+// 挂载路由导航守卫
+router.beforeEach((to, from, next) => {
+  // to 将要访问的路径
+  // from 代表从哪个路径跳转而来
+  // next 是一个函数, 表示方形
+  // next() 放行, next('/login')  强制跳转到url
+  if (to.path === '/login') return next()
+  // 获取token
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) return next('/login')
+  next()
+})
+
+export default router
+
+```
+
+
+
+## 退出
+
+清空 token .
+
+![1579067462538](assets/1579067462538.png)
+
+
+
+## 解决语法错误
+
+1. 不能使用双引号
+2. 默认后面要添加分号
+
+新添加文件
+
+![1579068697843](assets/1579068697843.png)
+
+
+
+函数名后面必须要添加空格
+
+![1579068753917](assets/1579068753917.png)
+
+
+
+# 主页布局
+
+![1579069763391](assets/1579069763391.png)
+
+
+
+## 使用element-ui 的container 布局要先导入
+
+![1579070613223](assets/1579070613223.png)
+
+
+
+## 左侧菜单
+
+![1579071115677](assets/1579071115677.png)
+
+
+
+![1579071822146](assets/1579071822146.png)
+
+
+
+请求必须携带token, 预处理过程.
+
+
+
+![1579072228477](assets/1579072228477.png)
+
+main.js
+
+添加请求头.`headers.Authorization`
+
+``` javascript
+import axios from 'axios'
+//
+import '@/assets/css/global.css'
+
+axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1'
+axios.interceptors.request.use(config => {
+  // console.log(config)
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+Vue.prototype.$http = axios
+```
+
 
 
 
