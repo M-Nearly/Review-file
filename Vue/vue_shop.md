@@ -15,6 +15,21 @@
 
   17-21 Vue.js项目实战开发\20-21vue电商\3.vue-项目实战day1\素材里面有个压缩包
 
+## 搭建环境
+mysql
+
+![1579141579231](assets/1579141579231.png)
+
+
+
+进入vue_api_server 目录, 执行 npm install
+
+node ./app.js
+
+
+
+
+
 
 
 
@@ -291,6 +306,100 @@ Vue.prototype.$http = axios
 ```
 
 
+
+## 作用域插槽
+
+``` html
+<!--        用户列表去-->
+        <el-table :data="userList" border stripe >
+          <el-table-column type="index" label="#"></el-table-column>
+          <el-table-column label="姓名" prop="username"></el-table-column>
+          <el-table-column label="邮箱" prop="email"></el-table-column>
+          <el-table-column label="电话" prop="mobile"></el-table-column>
+          <el-table-column label="角色" prop="role_name"></el-table-column>
+          <el-table-column label="状态" >
+            <template slot-scope="scope">
+<!--              拿到这行的数据-->
+<!--              {{ scope.row }}-->
+              <el-switch
+                v-model="scope.row.mg_state"
+                active-color="#13ce66"
+                inactive-color="#ff4949">
+              </el-switch>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" ></el-table-column>
+        </el-table>
+```
+
+
+
+## switch 状态修改
+
+监听 switch 状态改变 , 提交
+
+
+
+
+## Dialog 对话框
+
+
+
+## form 验证
+
+`:model` 数据绑定
+
+`:rules` 规则绑定
+
+`ref` 引用名字, 就是代表这个对象
+
+``` html
+        <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px" >
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="addForm.username"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="addForm.password"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="addForm.email"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="mobile">
+            <el-input v-model="addForm.mobile"></el-input>
+          </el-form-item>
+        </el-form>
+
+
+
+export default {
+  name: 'users',
+  data () {
+    return {
+      addForm: {
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
+      },
+      addFormRules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 10, message: '用户名长度在3~10个字符之前', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 15, message: '密码长度在6~15个字符之前', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: '请输入邮箱', trigger: 'blur' }
+        ],
+        mobile: [
+          { required: true, message: '请输入手机', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+```
 
 
 
