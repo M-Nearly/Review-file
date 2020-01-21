@@ -11,6 +11,14 @@
 
 
 
+## 进度  
+
+视频 107
+
+----
+
+
+
 源码链接https://pan.baidu.com/s/1z60ej714UHIZqFL4lzjIpg 里面有两个项目源码，这套视频用的“20-21vue  
 
   17-21 Vue.js项目实战开发\20-21vue电商\3.vue-项目实战day1\素材里面有个压缩包
@@ -403,3 +411,28 @@ export default {
 
 
 
+## MessageBox 使用
+
+弹出确认提示框
+
+
+
+## 使用其他分支提交代码
+
+`git push -u origin user`
+
+以user分支提交代码
+
+把user的分支合并到master分支
+
+1. 切换到主分支
+
+   ` git checkout master`
+
+2. 合并user分支
+
+   `git merge user`
+
+3. 把master分支提交到GitHub
+
+   `git push `
