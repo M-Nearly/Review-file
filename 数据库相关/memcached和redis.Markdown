@@ -47,8 +47,9 @@
 ## Python操作Memcached.
 ### 安装api
 > python操作Memcached使用Python-memcached模块
-  下载安装：https://pypi.python.org/pypi/python-memcached
-####  1. 第一次操作
+>   下载安装：https://pypi.python.org/pypi/python-memcached
+>
+> ####  1. 第一次操作
 ``` python
 import memcache
  

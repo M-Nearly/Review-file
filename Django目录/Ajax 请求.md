@@ -53,6 +53,44 @@ AJAX除了异步的特点外,还有一个就是浏览器页面的局部刷新
 
 
 
+
+
+// url:"/send/sms",  等价于下面的写法 
+url:"{% url 'send_sms' %}",
+
+```
+dataType:"JSON", // 将服务端返回的数据反序列化为字段
+```
+
+```javascript
+// 注册
+function bindClickSubmit() {
+    $("#btnSubmit").click(function () {
+        // 收集表单的数据
+        // ajax 发送到后台
+        $.ajax({
+            url: "{% url 'register' %}",
+            type: "POST",
+            data:$("#form").serialize(),
+            dataType: "JSON",
+            success:function (res) {
+                console.log(res)
+            }
+        })
+    })
+}
+```
+
+
+
+$("#form").serialize(),  直接解析form表单的各个input等的值 字典
+
+
+
+
+
+
+
 ``` python
 view视图函数
 
@@ -71,8 +109,10 @@ class Register(View)
 
 
 
-```
-# serialize
+###  serialize  直接解析form表单中的数据
+
+```javascript
+
 
             $("#MyBtn").click(function () {
                 let form1 = $("#Mydata").serialize();
@@ -96,11 +136,11 @@ class Register(View)
                 })
             })
 
-            ```
-
-
 ```
-# FormData
+
+###  FormData
+```javascript
+
         $("#MySave").click(function () {
             {#$("input[name='Myfile']")#}
             let formData = new FormData()
@@ -123,22 +163,30 @@ class Register(View)
         })
     })
 
-    ```
+```
 
 
-            $.ajax({
-            url: '{% url "device:face" %}', //调用django服务器计算函数
-            type: 'POST', //请求类型
-            beforeSend:function (xhr,setting) {
-                xhr.setRequestHeader("X-CSRFToken","{{ csrf_token }}");
-            },
-            data: formData,
-            dataType: 'json', //期望获得的响应类型为json
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                console.log(data)
-            }
+```javascript
+        $.ajax({
+        url: '{% url "device:face" %}', //调用django服务器计算函数
+        type: 'POST', //请求类型
+        beforeSend:function (xhr,setting) {
+            xhr.setRequestHeader("X-CSRFToken","{{ csrf_token }}");
+        },
+        data: formData,
+        dataType: 'json', //期望获得的响应类型为json
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log(data)
+        }
+```
 
 
         })
+
+
+
+```
+
+```
