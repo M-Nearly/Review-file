@@ -33,7 +33,7 @@
 ## django 静态文件的配置
 在setting 中添加静态文件的目录,
 ``` python
-​	STATIC_URL = '/static/'
+	STATIC_URL = '/static/'
 ​	STATICFILES_DIRS = [
 ​		os.path.join(BASE_DIR,'static')
 ​	]
@@ -124,9 +124,25 @@ from app01 import views
 urlpatterns = [
 	    re_path(r'^test/(?P<year>[0-9]{2})/$',views.url_test),
 	]
+
 ```
 
+### 分为两种
+
+ 1. path('app01/', include('app01.urls')), 输入字符串, 会读取字符串内的url文件内部的 urlpatterns.
+
+ 2. path('app01/', include([
+
+    ​	path("^dashboard/$",views.dashboard,name='dashboard')
+
+    ​	],None,None))
+
+    内部写一个列表或者元组,直接把路由分发的路径写进去
+
+
+
 ## 反向解析
+
 1. 在html代码里{% url "别名" 参数  参数%}
 2. 在视图函数中：
 	`from django.shortcuts import render, HttpResponse,redirect,reverse`
