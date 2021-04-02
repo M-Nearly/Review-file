@@ -187,6 +187,11 @@ class Register(View)
 
 
 
-```
 
-```
+
+### ajax 向Django 后台发送消息
+
+复杂的字符结构使用 JSON
+
+![image-20210330184222614](assets/image-20210330184222614.png)
+

@@ -162,6 +162,8 @@ URL 设计
 
      2. 视图
 
+        python3 -m pip install -U qcloud-python-sts
+
         ``` python
         # 获取页面的视图
         def demo2(request):
@@ -234,11 +236,11 @@ URL 设计
                                 // 可从 options 取所需的参数
                             }, function (data){
                                 var credentials = data && data.credentials ;
-                                if (!data || !creadentials ) return console.log("credentials invalid ");
+                                if (!data || !credentials ) return console.log("credentials invalid ");
                                 callback({
-                                    TmpSecreId: credentials.tmpSecretId,
+                                    TmpSecretId: credentials.tmpSecretId,
                                     TmpsecretKey: credentials.tmpSecretKey,
-                                    XCosSecurityTokey: credentials.sessionToken,
+                                    XCosSecurityToken: credentials.sessionToken,
                                     // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错
                                     StartTime: data.startTime, // 时间戳，单位秒
                                     ExpiredTime: data.expriedTime // 时间戳，单位秒
@@ -318,9 +320,9 @@ def create_bucket(bucket, region="ap-nanjing"):
             }
         ]
     }
-    client.put_bucket_core(
+    client.put_bucket_cors(
     	Bucket=bucket,
-        CORSConfiguration=core_config
+        CORSConfiguration=cores_config
     )
     
 ```
@@ -329,5 +331,7 @@ def create_bucket(bucket, region="ap-nanjing"):
 
 
 
+## 注意 
 
+putObject请求成功后没有返回ETag值，存储桶控制台的跨域访问CORS设置里的Expose-Headers加上ETag
 

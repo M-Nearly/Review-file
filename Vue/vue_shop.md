@@ -436,3 +436,21 @@ export default {
 3. 把master分支提交到GitHub
 
    `git push `
+
+
+
+
+
+## el-cascader 面板现实过长的问题
+
+在你的全局global.css里面添加
+
+```
+.el-cascader-menu {
+  height: 300px;
+}
+```
+
+就可以解决了。
+
+这是element的新版本的坑
